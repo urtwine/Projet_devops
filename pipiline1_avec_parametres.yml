@@ -1,22 +1,20 @@
 pipeline {
     agent any
     parameters {
-        string(name: 'NAME', description: 'Please tell me your name')
-        choice(name: 'GENDER', choices: ['Male', 'Female'], description: 'Choose Gender')
+        string(name: 'MONTH', description: 'Entre ton mois de suivi d\'objectif')
+        int(name: 'DAY', description: 'Entre le jour de ton suivi d\'objectif')
     }
     stages {
         stage('Printing name') {
             steps {
                 script {
-                    def name = "${params.NAME}"
-                    def gender = "${params.GENDER}"
-                    if(gender == "Male") {
-                        echo "Mr. $name"    
-                    } else {
-                        echo "Mrs. $name"
-                    }
+                    def month = params.month
+                    def day = params.DAY
+
+                    
+                    sh "java -jar code.jar $month $day"
                 }
             }
         }
-   }
+    }
 }
